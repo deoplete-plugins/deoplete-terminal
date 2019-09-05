@@ -26,7 +26,7 @@ class Source(Base):
             candidates += self._make_cache(context, bufnr)
         return candidates
 
-    def _make_cache(self, context: UserContext, bufnr: int) -> None:
+    def _make_cache(self, context: UserContext, bufnr: int) -> Candidates:
         try:
             end = len(self.vim.buffers[bufnr])
             start = max([end - 5000, 1])
