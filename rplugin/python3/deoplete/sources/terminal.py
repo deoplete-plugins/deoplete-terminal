@@ -24,7 +24,7 @@ class Source(Base):
     def gather_candidates(self, context: UserContext) -> Candidates:
         bufnrs = (self.vim.call('tabpagebuflist')
                   if self.get_var('require_same_tab')
-                  else range(1, self.vim.call('bufnr', '$')))
+                  else list(range(1, self.vim.call('bufnr', '$'))))
         candidates: Candidates = []
         for bufnr in [x for x in bufnrs if 'terminal' in self.vim.call(
             'getbufvar', x, '&buftype')]:
