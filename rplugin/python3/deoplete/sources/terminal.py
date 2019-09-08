@@ -17,11 +17,16 @@ class Source(Base):
         self.name = 'terminal'
         self.mark = '[term]'
         self.filetypes = []
+        self.vars = {
+            'require_same_tab': True,
+        }
 
     def gather_candidates(self, context: UserContext) -> Candidates:
-        tab_bufnrs = self.vim.call('tabpagebuflist')
+        bufnrs = (self.vim.call('tabpagebuflist')
+                  if self.get_var('require_same_tab')
+                  else range(1, self.vim.call('bufnr', '$')))
         candidates: Candidates = []
-        for bufnr in [x for x in tab_bufnrs if 'terminal' in self.vim.call(
+        for bufnr in [x for x in bufnrs if 'terminal' in self.vim.call(
             'getbufvar', x, '&buftype')]:
             candidates += self._make_cache(context, bufnr)
         return candidates

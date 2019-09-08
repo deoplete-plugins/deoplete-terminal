@@ -11,3 +11,7 @@ https://github.com/Shougo/deoplete.nvim
 
 ## Configuration
 
+```vim
+" Search background terminal buffers
+call deoplete#custom#var('terminal', 'require_same_tab', v:false)
+```
